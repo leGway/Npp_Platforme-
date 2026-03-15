@@ -11,24 +11,19 @@ export default function Univers() {
   ];
 
   return (
-    // overflow-hidden ici est OBLIGATOIRE pour la suite
-    <section className="py-24 bg-neopGrisClair text-neopBleuNuit overflow-hidden" id="expertises">
+    // 1. TRÈS IMPORTANT : overflow-x-hidden empêche l'apparition d'une barre de défilement horizontale
+    <section className="py-24 bg-neopGrisClair text-neopBleuNuit overflow-x-hidden relative" id="expertises">
       <div className="container mx-auto px-6">
         
-        {/* Titre de la section */}
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-            Nos Domaines d'Expertise
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Des solutions complètes pour accompagner votre transformation digitale de A à Z.
-          </p>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">Nos Domaines d'Expertise</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">Des solutions complètes pour accompagner votre transformation digitale de A à Z.</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+        <div className="flex flex-col lg:flex-row items-start gap-16">
           
-          {/* BLOC GAUCHE : Le Visuel (Inchangé) */}
-          <div className="w-full lg:w-1/2 flex justify-center relative">
+          {/* BLOC GAUCHE : L'Astronaute */}
+          <div className="w-full lg:w-1/2 flex justify-center relative lg:sticky top-24">
             <div className="relative w-full max-w-md aspect-square bg-white rounded-full shadow-2xl flex items-center justify-center border-4 border-neopTurquoise z-10">
               <span className="text-8xl">🚀</span>
             </div>
@@ -36,7 +31,7 @@ export default function Univers() {
             <div className="absolute bottom-10 left-10 w-24 h-24 bg-neopBleuNuit rounded-full shadow-lg z-0"></div>
           </div>
 
-          {/* BLOC DROITE : L'Accordéon MODIFIÉ */}
+          {/* BLOC DROITE : L'Accordéon */}
           <div className="w-full lg:w-1/2 space-y-4">
             
             {services.map((service) => {
@@ -46,27 +41,19 @@ export default function Univers() {
                 <div 
                   key={service.id} 
                   onClick={() => setOngletActif(service.id)}
-                  // --- MODIFICATION ICI ---
-                  // overflow-visible pour laisser déborder le fond
-                  // relative z-10 pour gérer les superpositions
-                  // rounded dynamique : pas d'arrondis à droite si ouvert (rounded-r-none)
-                  className={`transition-all duration-300 cursor-pointer border-l-4 overflow-visible relative z-10
-                    ${estOuvert 
-                        ? 'bg-white shadow-xl border-neopJaune rounded-l-2xl rounded-r-none' 
-                        : 'bg-gray-200 border-transparent hover:bg-gray-300 rounded-2xl'}`}
+                  // 2. LA DIV PRINCIPALE : On enlève le bg-white ici quand c'est ouvert !
+                  className={`relative transition-all duration-300 cursor-pointer border-l-4 z-10
+                    ${estOuvert ? 'border-neopJaune' : 'bg-gray-200 border-transparent hover:bg-gray-300 rounded-2xl'}`}
                 >
                   
-                  {/* --- LA TECHNIQUE PRO ICI --- */}
-                  {/* Uniquement si ouvert : on crée un bloc blanc absolu qui part de la droite du composant 
-                      et s'étend sur 100% de la largeur de l'écran vers la droite, supprimant la marge grise. */}
+                  {/* 3. LA MAGIE EST ICI : Le fond blanc infini */}
+                  {/* Il fait 100vw (largeur de l'écran), part de la gauche de la case, et va s'encastrer dans le bord droit de ton écran */}
                   {estOuvert && (
-                    <div className="hidden lg:block absolute top-0 bottom-0 left-full w-[100vw] bg-white z-0 shadow-[20px_0_20px_-10px_rgba(0,0,0,0.1)]"></div>
+                    <div className="absolute top-0 bottom-0 left-0 w-[100vw] bg-white -z-10 rounded-l-2xl shadow-xl"></div>
                   )}
                   
-                  {/* On entoure le contenu d'un div relative z-20 pour qu'il reste au-dessus du fond blanc qu'on vient de créer */}
+                  {/* Le Contenu (en z-20 pour être au-dessus du fond blanc) */}
                   <div className="relative z-20 px-8 py-6">
-                    
-                    {/* L'en-tête de la case */}
                     <div className="flex justify-between items-center">
                       <h3 className={`text-xl font-bold ${estOuvert ? 'text-neopTurquoise' : 'text-neopBleuNuit'}`}>
                         {service.titre}
@@ -76,19 +63,18 @@ export default function Univers() {
                       </div>
                     </div>
                     
-                    {/* Le contenu */}
                     {estOuvert && (
-                      <div className="pt-6 animate-fade-in-down">
+                      <div className="pt-6">
                         <p className="text-gray-600 mb-6 leading-relaxed">
                           {service.description}
                         </p>
                         <button className="bg-neopJaune text-neopBleuNuit font-bold py-2 px-6 rounded-full hover:bg-yellow-400 transition-colors shadow-sm">
-                          Découvrir →
+                          Découvrir &rarr;
                         </button>
                       </div>
                     )}
-
                   </div>
+
                 </div>
               );
             })}

@@ -34,19 +34,18 @@ export default function Hero() {
 
                 <div className="flex flex-col sm:flex-row justify-center gap-6">
                     <button onClick={gererClic} className="bg-neopJaune hover:bg-yellow-400 text-neopBleuNuit font-bold py-4 px-8 rounded-full transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-1">
-                        Discuter avec un expert 🚀
+                        Discuter avec un expert
                     </button>
                     <button className="border-2 border-neopJaune text-white hover:bg-neopJaune hover:text-neopBleuNuit font-bold py-4 px-8 rounded-full transition-all">
                         En savoir plus sur NEOP+
                     </button>
                 </div>
             </div>
-
-            {/* Séparateur Vague */}
-            <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none translate-y-1">
+{/* Le séparateur en forme de Vague  */}
+<div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none translate-y-1">
                 <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[100px] md:h-[150px]">
                     <path 
-                        d="M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V120H0V95.8C59.71 118 130.42 121 194.5 108c56.8-11.5 110.2-30.5 166.4-46.5z" 
+                        d="M0,120 L0,80 C300,80 400,10 600,10 C800,10 900,80 1200,80 L1200,120 Z" 
                         fill="#f5f5f5"
                     ></path>
                 </svg>
