@@ -1,35 +1,51 @@
 import { useState } from 'react';
+// 1. IMPORT DES ICÔNES LUCIDE
+import { Users, Target, Handshake } from 'lucide-react';
 
 export default function Hero() {
-    // État React avec la syntaxe standard (virgule)
     const [email, setEmail] = useState("");
 
     const gererClic = (event) => {
         event.preventDefault();
-        console.log("Nouveau lead intéressé :", email);
+        console.log("Nouveau lead intéressé :" , email);
         alert("Ouverture de la modale de contact !");
     };
 
     return (
         <section className="relative bg-neopBleuNuit text-white min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20 pb-32">
             
-            {/* Effet visuel Espace */}
             <div className="absolute top-1/4 left-10 w-32 h-32 bg-neopTurquoise rounded-full opacity-20 blur-3xl"></div>
             <div className="absolute bottom-1/4 right-20 w-40 h-40 bg-neopJaune rounded-full opacity-10 blur-3xl"></div>
 
             <div className="container mx-auto px-6 z-10 text-center relative">
                 
-                <span className="text-neopJaune font-bold tracking-widest uppercase text-sm mb-4 block">
-                    + De Visiteurs • + De Prospects • + De Clients
-                </span>
+                {/* 2. LA NOUVELLE LIGNE AVEC ICÔNES */}
+                <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 text-neopJaune font-bold tracking-wider uppercase text-xs md:text-sm mb-8">
+                    <span className="flex items-center gap-2 bg-neopJaune/10 px-3 py-1.5 rounded-full">
+                        <Users className="w-4 h-4" /> + De Visiteurs
+                    </span>
+                    
+                    {/* Le petit point de séparation (caché sur les très petits téléphones) */}
+                    <span className="text-neopTurquoise opacity-50 hidden sm:block">•</span>
+                    
+                    <span className="flex items-center gap-2 bg-neopJaune/10 px-3 py-1.5 rounded-full">
+                        <Target className="w-4 h-4" /> + De Prospects
+                    </span>
+                    
+                    <span className="text-neopTurquoise opacity-50 hidden sm:block">•</span>
+                    
+                    <span className="flex items-center gap-2 bg-neopJaune/10 px-3 py-1.5 rounded-full">
+                        <Handshake className="w-4 h-4" /> + De Clients
+                    </span>
+                </div>
 
                 <h1 className="text-5xl md:text-6xl md:leading-tight font-extrabold mb-6">
                     Partez à la découverte de nos univers <br className="hidden md:block" />
-                    <span className="text-neopTurquoise">Web, Data & IA</span>
+                    <span className="text-neopTurquoise">Web; Data & IA</span>
                 </h1>
 
                 <p className="text-lg md:text-xl mb-10 text-gray-300 max-w-3xl mx-auto">
-                    Embarquez dans la galaxie NEOP+, l'agence digitale capable de booster votre croissance sur l'ensemble de votre parcours de vente.
+                    Embarquez dans la galaxie NEOP+; l'agence digitale capable de booster votre croissance sur l'ensemble de votre parcours de vente.
                 </p>
 
                 <div className="flex flex-col sm:flex-row justify-center gap-6">
@@ -40,8 +56,19 @@ export default function Hero() {
                         En savoir plus sur NEOP+
                     </button>
                 </div>
+
+                <div className="mt-8 flex items-center justify-center gap-4 bg-white/5 py-2 px-6 rounded-full border border-white/10 shadow-sm w-max mx-auto">
+                    <div className="flex -space-x-3">
+                        <div className="w-8 h-8 rounded-full bg-neopTurquoise border-2 border-neopBleuNuit flex items-center justify-center text-xs font-bold text-white">S</div>
+                        <div className="w-8 h-8 rounded-full bg-gray-400 border-2 border-neopBleuNuit flex items-center justify-center text-xs font-bold text-white">M</div>
+                        <div className="w-8 h-8 rounded-full bg-neopJaune border-2 border-neopBleuNuit flex items-center justify-center text-xs font-bold text-neopBleuNuit">J</div>
+                    </div>
+                    <p className="text-sm text-gray-300">
+                        <span className="font-bold text-white">+50 entreprises</span> auditées ce mois-ci
+                    </p>
+                </div>
+
             </div>
-{/* Le séparateur en forme de Vague  */}
 <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none translate-y-1">
                 <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[100px] md:h-[150px]">
                     <path 

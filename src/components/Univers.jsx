@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import imageAstronaute from '../assets/astronaute.png';
 
 export default function Univers() {
   const [ongletActif, setOngletActif] = useState(0);
@@ -11,22 +12,35 @@ export default function Univers() {
   ];
 
   return (
-    // 1. TRÈS IMPORTANT : overflow-x-hidden empêche l'apparition d'une barre de défilement horizontale
+    // overflow-x-hidden est VITAL ici pour empêcher le fond blanc de créer un défilement horizontal
     <section className="py-24 bg-neopGrisClair text-neopBleuNuit overflow-x-hidden relative" id="expertises">
       <div className="container mx-auto px-6">
         
+        {/* Titre de la section */}
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">Nos Domaines d'Expertise</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">Des solutions complètes pour accompagner votre transformation digitale de A à Z.</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+            Nos Domaines d'Expertise
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Des solutions complètes pour accompagner votre transformation digitale de A à Z.
+          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row items-start gap-16">
           
-          {/* BLOC GAUCHE : L'Astronaute */}
+          {/* BLOC GAUCHE : Le Visuel (L'image importée) */}
           <div className="w-full lg:w-1/2 flex justify-center relative lg:sticky top-24">
-            <div className="relative w-full max-w-md aspect-square bg-white rounded-full shadow-2xl flex items-center justify-center border-4 border-neopTurquoise z-10">
-              <span className="text-8xl">🚀</span>
+            
+            {/* Le cercle conteneur : overflow-hidden coupe ce qui dépasse du cercle */}
+            <div className="relative w-full max-w-md aspect-square bg-white rounded-full shadow-2xl flex items-center justify-center border-4 border-neopTurquoise z-10 overflow-hidden">
+              <img 
+                src={imageAstronaute} 
+                alt="Illustration des univers NEOP+" 
+                className="w-full h-full object-cover" 
+              />
             </div>
+            
+            {/* Petites planètes décoratives */}
             <div className="absolute top-10 right-10 w-16 h-16 bg-neopJaune rounded-full shadow-lg z-20 animate-bounce"></div>
             <div className="absolute bottom-10 left-10 w-24 h-24 bg-neopBleuNuit rounded-full shadow-lg z-0"></div>
           </div>
@@ -41,18 +55,18 @@ export default function Univers() {
                 <div 
                   key={service.id} 
                   onClick={() => setOngletActif(service.id)}
-                  // 2. LA DIV PRINCIPALE : On enlève le bg-white ici quand c'est ouvert !
+                  // La div principale : on enlève le bg-white quand c'est ouvert pour laisser place au fond magique
                   className={`relative transition-all duration-300 cursor-pointer border-l-4 z-10
                     ${estOuvert ? 'border-neopJaune' : 'bg-gray-200 border-transparent hover:bg-gray-300 rounded-2xl'}`}
                 >
                   
-                  {/* 3. LA MAGIE EST ICI : Le fond blanc infini */}
-                  {/* Il fait 100vw (largeur de l'écran), part de la gauche de la case, et va s'encastrer dans le bord droit de ton écran */}
+                  {/* LA MAGIE DU FOND BLANC INFINI */}
+                  {/* Cette div fait la largeur de l'écran (100vw) et s'étend à droite pour combler la marge grise */}
                   {estOuvert && (
                     <div className="absolute top-0 bottom-0 left-0 w-[100vw] bg-white -z-10 rounded-l-2xl shadow-xl"></div>
                   )}
                   
-                  {/* Le Contenu (en z-20 pour être au-dessus du fond blanc) */}
+                  {/* Le Contenu (en z-20 pour être bien au-dessus du fond blanc) */}
                   <div className="relative z-20 px-8 py-6">
                     <div className="flex justify-between items-center">
                       <h3 className={`text-xl font-bold ${estOuvert ? 'text-neopTurquoise' : 'text-neopBleuNuit'}`}>
