@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import { ChevronDown, ArrowRight, MessageCircleQuestion } from 'lucide-react';
 
 export default function FAQ() {
-  // On gère l'état pour savoir quelle question est ouverte (null = aucune)
   const [questionActive, setQuestionActive] = useState(null);
 
-  // Les questions fréquentes (Tu pourras les adapter à ton offre exacte)
   const faqs = [
     {
       id: 1,
@@ -28,23 +27,19 @@ export default function FAQ() {
     }
   ];
 
-  // Fonction pour ouvrir/fermer une question
   const gererClic = (id) => {
-    // Si on clique sur la question déjà ouverte, on la ferme (null), sinon on l'ouvre
     setQuestionActive(questionActive === id ? null : id);
   };
 
   return (
-    // Fond blanc pur pour un style très propre et lisible
-    <section className="py-24 bg-white text-neopBleuNuit" id="faq">
+    <section className="py-24 bg-white text-neopBleuNuit relative" id="faq">
       <div className="container mx-auto px-6 max-w-4xl">
         
-        {/* En-tête de la FAQ */}
-        <div className="text-center mb-16">
-          <span className="text-neopTurquoise font-bold tracking-widest uppercase text-sm mb-2 block">
+        <div className="text-center mb-16 md:mb-20">
+          <span className="text-neopTurquoise font-bold tracking-widest uppercase text-sm mb-3 block">
             Des questions ?
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
             Foire Aux <span className="text-neopJaune">Questions</span>
           </h2>
           <p className="text-lg text-gray-600">
@@ -52,52 +47,61 @@ export default function FAQ() {
           </p>
         </div>
 
-        {/* Liste des questions */}
-        <div className="space-y-4">
+        <div className="space-y-4 md:space-y-6">
           {faqs.map((faq) => {
             const estOuvert = questionActive === faq.id;
 
             return (
               <div 
                 key={faq.id} 
-                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${estOuvert ? 'border-neopTurquoise shadow-md' : 'border-gray-200 hover:border-neopTurquoise'}`}
+                className={`border-2 rounded-2xl overflow-hidden transition-all duration-300 ${estOuvert ? 'border-neopTurquoise bg-neopTurquoise/5 shadow-md' : 'border-gray-100 hover:border-gray-300 bg-white'}`}
               >
-                {/* Le bouton de la question */}
                 <button 
                   onClick={() => gererClic(faq.id)}
-                  className="w-full px-8 py-6 flex justify-between items-center text-left focus:outline-none bg-white"
+                  className="w-full px-6 py-6 md:px-8 flex justify-between items-center text-left focus:outline-none"
                 >
-                  <h3 className={`font-bold text-lg pr-4 transition-colors ${estOuvert ? 'text-neopTurquoise' : 'text-neopBleuNuit'}`}>
+                  <h3 className={`font-bold text-lg pr-8 transition-colors ${estOuvert ? 'text-neopTurquoise' : 'text-neopBleuNuit'}`}>
                     {faq.question}
                   </h3>
                   
-                  {/* L'icône + ou - */}
-                  <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${estOuvert ? 'border-neopTurquoise bg-neopTurquoise text-white rotate-180' : 'border-gray-300 text-gray-500'}`}>
-                    {estOuvert ? '−' : '+'}
+                  {/* Icône Chevron avec rotation fluide */}
+                  <div className={`flex-shrink-0 transition-transform duration-300 ${estOuvert ? 'text-neopTurquoise rotate-180' : 'text-gray-400 rotate-0'}`}>
+                    <ChevronDown className="w-6 h-6" />
                   </div>
                 </button>
 
-                {/* La réponse (qui se déroule) */}
+                {/* Le bloc de réponse */}
                 <div 
-                  className={`px-8 transition-all duration-300 ease-in-out overflow-hidden ${estOuvert ? 'max-h-96 pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${estOuvert ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
                 >
-                  <div className="w-full h-px bg-gray-100 mb-6"></div> {/* Petite ligne de séparation */}
-                  <p className="text-gray-600 leading-relaxed">
-                    {faq.reponse}
-                  </p>
+                  <div className="px-6 pb-6 md:px-8 md:pb-8 pt-0">
+                    <p className="text-gray-600 leading-relaxed border-t border-gray-200/50 pt-6">
+                      {faq.reponse}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Petit bloc de réassurance en bas de la FAQ */}
-        <div className="mt-12 text-center bg-neopGrisClair rounded-2xl p-8 border border-gray-200">
-          <p className="text-lg font-semibold mb-2">Vous avez une autre question ?</p>
-          <p className="text-gray-600 mb-6">Notre équipe est là pour vous répondre rapidement.</p>
-          <button className="bg-neopBleuNuit text-white font-bold py-3 px-8 rounded-full hover:bg-neopTurquoise transition-colors shadow-lg">
-            Poser ma question
-          </button>
+        {/* Bloc CTA (Appel à l'action) optimisé en lien */}
+        <div className="mt-16 text-center bg-gray-50 rounded-3xl p-10 border border-gray-100 shadow-sm relative overflow-hidden group">
+          <MessageCircleQuestion className="absolute -bottom-6 -right-6 w-32 h-32 text-gray-200 opacity-50 group-hover:scale-110 transition-transform duration-500" />
+          
+          <div className="relative z-10">
+            <h4 className="text-2xl font-bold mb-3">Vous avez un projet spécifique ?</h4>
+            <p className="text-gray-600 mb-8 max-w-lg mx-auto">
+              Notre équipe d'experts est disponible pour analyser vos besoins et vous proposer une stratégie sur-mesure.
+            </p>
+            
+            <a 
+              href="#contact" 
+              className="inline-flex items-center gap-2 bg-neopBleuNuit text-white font-bold py-4 px-10 rounded-full hover:bg-neopTurquoise transition-all duration-300 shadow-lg transform hover:-translate-y-1"
+            >
+              Poser ma question <ArrowRight className="w-5 h-5" />
+            </a>
+          </div>
         </div>
 
       </div>

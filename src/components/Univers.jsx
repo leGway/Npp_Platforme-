@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import imageAstronaute from '../assets/astronaute.png';
+import { ArrowRight } from 'lucide-react';
 
 export default function Univers() {
+  // Syntaxe avec point-virgule pour la déstructuration
   const [ongletActif, setOngletActif] = useState(0);
 
   const services = [
@@ -12,12 +14,13 @@ export default function Univers() {
   ];
 
   return (
-    // overflow-x-hidden est VITAL ici pour empêcher le fond blanc de créer un défilement horizontal
-    <section className="py-24 bg-neopGrisClair text-neopBleuNuit overflow-x-hidden relative" id="expertises">
+    <section className="py-24 bg-neopGrisClair text-neopBleuNuit overflow-x-hidden relative" id="univers">
       <div className="container mx-auto px-6">
         
-        {/* Titre de la section */}
         <div className="text-center mb-20">
+          <span className="text-neopTurquoise font-bold tracking-widest uppercase text-sm mb-2 block">
+            Votre parcours
+          </span>
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
             Nos Domaines d'Expertise
           </h2>
@@ -28,10 +31,8 @@ export default function Univers() {
 
         <div className="flex flex-col lg:flex-row items-start gap-16">
           
-          {/* BLOC GAUCHE : Le Visuel (L'image importée) */}
+          {/* BLOC GAUCHE : L'Astronaute */}
           <div className="w-full lg:w-1/2 flex justify-center relative lg:sticky top-24">
-            
-            {/* Le cercle conteneur : overflow-hidden coupe ce qui dépasse du cercle */}
             <div className="relative w-full max-w-md aspect-square bg-white rounded-full shadow-2xl flex items-center justify-center border-4 border-neopTurquoise z-10 overflow-hidden">
               <img 
                 src={imageAstronaute} 
@@ -40,7 +41,6 @@ export default function Univers() {
               />
             </div>
             
-            {/* Petites planètes décoratives */}
             <div className="absolute top-10 right-10 w-16 h-16 bg-neopJaune rounded-full shadow-lg z-20 animate-bounce"></div>
             <div className="absolute bottom-10 left-10 w-24 h-24 bg-neopBleuNuit rounded-full shadow-lg z-0"></div>
           </div>
@@ -48,25 +48,22 @@ export default function Univers() {
           {/* BLOC DROITE : L'Accordéon */}
           <div className="w-full lg:w-1/2 space-y-4">
             
-            {services.map((service) => {
+            {/* Utilisation du point-virgule pour les arguments de la fonction map */}
+            {services.map((service, index) => {
               const estOuvert = ongletActif === service.id;
 
               return (
                 <div 
                   key={service.id} 
                   onClick={() => setOngletActif(service.id)}
-                  // La div principale : on enlève le bg-white quand c'est ouvert pour laisser place au fond magique
                   className={`relative transition-all duration-300 cursor-pointer border-l-4 z-10
                     ${estOuvert ? 'border-neopJaune' : 'bg-gray-200 border-transparent hover:bg-gray-300 rounded-2xl'}`}
                 >
                   
-                  {/* LA MAGIE DU FOND BLANC INFINI */}
-                  {/* Cette div fait la largeur de l'écran (100vw) et s'étend à droite pour combler la marge grise */}
                   {estOuvert && (
                     <div className="absolute top-0 bottom-0 left-0 w-[100vw] bg-white -z-10 rounded-l-2xl shadow-xl"></div>
                   )}
                   
-                  {/* Le Contenu (en z-20 pour être bien au-dessus du fond blanc) */}
                   <div className="relative z-20 px-8 py-6">
                     <div className="flex justify-between items-center">
                       <h3 className={`text-xl font-bold ${estOuvert ? 'text-neopTurquoise' : 'text-neopBleuNuit'}`}>
@@ -78,13 +75,18 @@ export default function Univers() {
                     </div>
                     
                     {estOuvert && (
-                      <div className="pt-6">
+                      <div className="pt-6 animate-fade-in-up">
                         <p className="text-gray-600 mb-6 leading-relaxed">
                           {service.description}
                         </p>
-                        <button className="bg-neopJaune text-neopBleuNuit font-bold py-2 px-6 rounded-full hover:bg-yellow-400 transition-colors shadow-sm">
-                          Découvrir &rarr;
-                        </button>
+                        
+                        {/* LE BOUTON MAGIQUE QUI DESCEND VERS LA STACK TECHNIQUE */}
+                        <a 
+                          href="#stack-technique" 
+                          className="inline-flex items-center gap-2 bg-neopJaune text-neopBleuNuit font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 w-max"
+                        >
+                          Découvrir en détail <ArrowRight className="w-5 h-5" />
+                        </a>
                       </div>
                     )}
                   </div>

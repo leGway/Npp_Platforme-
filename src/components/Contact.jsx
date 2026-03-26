@@ -1,6 +1,6 @@
 import { useState } from 'react';
-// 1. IMPORTATION DES ICÔNES PRO
-import { Phone, Mail, MapPin, Send } from 'lucide-react';
+// On garde tes icônes et on ajoute celles pour le statut d'envoi
+import { Phone, Mail, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -11,15 +11,44 @@ export default function Contact() {
     message: ''
   });
 
+  // NOUVEAU : On gère l'état visuel du bouton
+  const [statut, setStatut] = useState('repos');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  // NOUVEAU : La fonction qui contacte le serveur Node.js
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Nouveau Lead reçu :" , formData);
-    alert("Merci ! Votre message a bien été envoyé. Notre équipe d'experts vous recontacte sous 24h.");
+    setStatut('chargement');
+
+    try {
+      const reponse = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const resultat = await reponse.json();
+
+      if (reponse.ok && resultat.success) {
+        setStatut('succes');
+        // On vide le formulaire après succès
+        setFormData({ nom: '', email: '', telephone: '', service: '', message: '' });
+        setTimeout(() => setStatut('repos'), 5000);
+      } else {
+        setStatut('erreur');
+        setTimeout(() => setStatut('repos'), 5000);
+      }
+    } catch (erreur) {
+      console.error("Erreur de connexion au serveur :", erreur);
+      setStatut('erreur');
+      setTimeout(() => setStatut('repos'), 5000);
+    }
   };
 
   return (
@@ -40,7 +69,7 @@ export default function Contact() {
 
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
           
-          {/* BLOC GAUCHE */}
+          {/* BLOC GAUCHE (Inchangé : Ton excellent design) */}
           <div className="lg:w-2/5 bg-neopBleuNuit text-white p-10 md:p-12 flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-0 right-0 w-40 h-40 bg-neopTurquoise rounded-full opacity-10 translate-x-1/2 -translate-y-1/2"></div>
             <div className="absolute bottom-0 left-0 w-56 h-56 bg-neopJaune rounded-full opacity-10 -translate-x-1/2 translate-y-1/2"></div>
@@ -52,8 +81,6 @@ export default function Contact() {
               </p>
               
               <div className="space-y-6">
-                
-                {/* 2. UTILISATION DES ICÔNES ICI */}
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-neopJaune">
                     <Phone className="w-6 h-6" />
@@ -83,7 +110,6 @@ export default function Contact() {
                     <p className="font-semibold">Paris & Île-de-France</p>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -126,8 +152,21 @@ export default function Contact() {
                 <textarea id="message" name="message" required rows="4" value={formData.message} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-neopTurquoise outline-none resize-none" placeholder="Décrivez brièvement vos objectifs..."></textarea>
               </div>
 
-              <button type="submit" className="w-full bg-neopJaune text-neopBleuNuit font-bold text-lg py-4 rounded-xl hover:bg-yellow-400 transition-all shadow-md flex items-center justify-center gap-3">
-                Envoyer ma demande <Send className="w-5 h-5" />
+              {/* NOUVEAU : Le bouton dynamique basé sur l'état */}
+              <button 
+                type="submit" 
+                disabled={statut === 'chargement'}
+                className={`w-full font-bold text-lg py-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-3
+                  ${statut === 'repos' ? 'bg-neopJaune text-neopBleuNuit hover:bg-yellow-400' : ''}
+                  ${statut === 'chargement' ? 'bg-gray-400 text-white cursor-not-allowed' : ''}
+                  ${statut === 'succes' ? 'bg-green-500 text-white' : ''}
+                  ${statut === 'erreur' ? 'bg-red-500 text-white' : ''}
+                `}
+              >
+                {statut === 'repos' && <>Envoyer ma demande <Send className="w-5 h-5" /></>}
+                {statut === 'chargement' && 'Envoi en cours...'}
+                {statut === 'succes' && <><CheckCircle2 className="w-5 h-5" /> Demande envoyée !</>}
+                {statut === 'erreur' && <><AlertCircle className="w-5 h-5" /> Erreur d'envoi</>}
               </button>
               
               <p className="text-xs text-gray-500 text-center mt-4">

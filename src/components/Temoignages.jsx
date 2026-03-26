@@ -1,6 +1,7 @@
+import { Star, Quote } from 'lucide-react';
+
 export default function Temoignages() {
   
-  // Base de données des avis clients
   const avisClients = [
     {
       id: 1,
@@ -28,64 +29,56 @@ export default function Temoignages() {
     }
   ];
 
-  // Fonction pour générer les étoiles facilement
   const afficherEtoiles = (note) => {
     return Array.from({ length: 5 }, (_, index) => (
-      <span key={index} className={index < note ? "text-neopJaune" : "text-gray-300"}>
-        ★
-      </span>
+      <Star 
+        key={index} 
+        className={`w-5 h-5 ${index < note ? "text-neopJaune fill-neopJaune" : "text-gray-300 fill-transparent"}`} 
+      />
     ));
   };
 
   return (
-    // On repasse sur un fond clair pour contraster avec la section précédente
-    <section className="py-24 bg-neopGrisClair text-neopBleuNuit" id="temoignages">
-      <div className="container mx-auto px-6">
+    <section className="py-24 bg-neopGrisClair text-neopBleuNuit relative overflow-hidden" id="temoignages">
+      <div className="container mx-auto px-6 relative z-10">
         
-        {/* En-tête */}
-        <div className="text-center mb-16">
-          <span className="text-neopTurquoise font-bold tracking-widest uppercase text-sm mb-2 block">
+        <div className="text-center mb-16 md:mb-24">
+          <span className="text-neopTurquoise font-bold tracking-widest uppercase text-sm mb-3 block">
             Preuve sociale
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-            Ils ont propulsé leur <span className="text-neopBleuNuit border-b-4 border-neopJaune">croissance</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+            Ils ont propulsé leur <span className="text-neopJaune bg-neopBleuNuit px-4 py-1 rounded-xl">croissance</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-6">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Ne nous croyez pas sur parole, écoutez plutôt ce que nos clients disent de notre collaboration.
           </p>
         </div>
 
-        {/* Grille des témoignages */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           
           {avisClients.map((avis) => (
             <div 
               key={avis.id} 
-              className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 relative border border-gray-100"
+              className="bg-white rounded-3xl p-8 md:p-10 shadow-lg hover:shadow-2xl transition-all duration-300 relative border border-gray-100 group flex flex-col h-full"
             >
-              {/* Le petit style "guillemet" en haut à gauche pour le design */}
-              <div className="absolute top-6 right-8 text-6xl text-gray-200 font-serif leading-none">
-                "
-              </div>
+              {/* L'icône guillemet en arrière-plan (lucide-react) */}
+              <Quote className="absolute top-8 right-8 w-16 h-16 text-gray-100 rotate-180 z-0 transition-transform duration-500 group-hover:scale-110" />
               
-              {/* Les étoiles */}
-              <div className="text-xl mb-6">
+              <div className="flex gap-1 mb-8 relative z-10">
                 {afficherEtoiles(avis.note)}
               </div>
               
-              {/* Le texte de l'avis */}
-              <p className="text-gray-700 italic mb-8 relative z-10 leading-relaxed">
+              {/* flex-grow pousse les infos client vers le bas si le texte est court */}
+              <p className="text-gray-700 italic mb-10 relative z-10 leading-relaxed text-lg flex-grow">
                 "{avis.texte}"
               </p>
               
-              {/* Informations du client */}
-              <div className="flex items-center gap-4 border-t border-gray-100 pt-6">
-                {/* Avatar généré avec les initiales */}
-                <div className="w-12 h-12 rounded-full bg-neopBleuNuit text-white flex items-center justify-center font-bold text-lg">
+              <div className="flex items-center gap-4 border-t border-gray-100 pt-6 mt-auto relative z-10">
+                <div className="w-14 h-14 rounded-full bg-neopBleuNuit text-white flex items-center justify-center font-bold text-xl shadow-inner">
                   {avis.nom.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-bold text-neopBleuNuit">{avis.nom}</h4>
+                  <h4 className="font-bold text-neopBleuNuit text-lg">{avis.nom}</h4>
                   <p className="text-sm text-gray-500">{avis.poste} • <span className="text-neopTurquoise font-semibold">{avis.entreprise}</span></p>
                 </div>
               </div>

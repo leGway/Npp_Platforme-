@@ -44,15 +44,31 @@ export default function Footer() {
                 </a>
               </div>
             </div>
-
-            {/* Colonne 2 : Nos Expertises (Optimisé SEO) */}
+{/* Colonne 2 : Nos Expertises (Optimisé SEO et Liens corrigés) */}
             <div>
               <h4 className="text-white font-bold mb-6 uppercase tracking-wider text-sm">Nos Expertises</h4>
               <ul className="space-y-3 text-sm text-gray-400">
-                <li><a href="#expertises" className="hover:text-neopJaune transition-colors flex items-center gap-2"><ArrowRight className="w-4 h-4" /> Création Site Web</a></li>
-                <li><a href="#expertises" className="hover:text-neopJaune transition-colors flex items-center gap-2"><ArrowRight className="w-4 h-4" /> Stratégie Data & IA</a></li>
-                <li><a href="#expertises" className="hover:text-neopJaune transition-colors flex items-center gap-2"><ArrowRight className="w-4 h-4" /> Intégration CRM</a></li>
-                <li><a href="#expertises" className="hover:text-neopJaune transition-colors flex items-center gap-2"><ArrowRight className="w-4 h-4" /> Studio Design & UI</a></li>
+                {/* Les href pointent maintenant vers #univers */}
+                <li>
+                  <a href="#univers" className="hover:text-neopJaune transition-colors flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4" /> Création Site Web
+                  </a>
+                </li>
+                <li>
+                  <a href="#univers" className="hover:text-neopJaune transition-colors flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4" /> Stratégie Data & IA
+                  </a>
+                </li>
+                <li>
+                  <a href="#univers" className="hover:text-neopJaune transition-colors flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4" /> Intégration CRM
+                  </a>
+                </li>
+                <li>
+                  <a href="#univers" className="hover:text-neopJaune transition-colors flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4" /> Studio Design & UI
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -99,7 +115,9 @@ export default function Footer() {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="hover:text-white transition-colors">Mentions légales</a>
               <a href="#" className="hover:text-white transition-colors">Politique de confidentialité</a>
-              <a href="#" className="hover:text-white transition-colors">CGV</a>
+              <a href="#" className="hover:text-white transition-colors">Politique des cookies</a>
+              <a href="#" className="hover:text-white transition-colors">CGU</a>
+
             </div>
           </div>
           
